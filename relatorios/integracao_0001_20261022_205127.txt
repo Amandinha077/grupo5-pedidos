@@ -1,0 +1,23 @@
+====================================================
+PROCESSAMENTO DA INTEGRAÇÃO
+====================================================
+Integração nº:     1
+Data/hora:         22/10/2026 20:51:27
+Origem:            Grupo 3 - Sistema de Produtos
+Estrutura:         public.vw_integracao_produtos
+Destino:           Grupo 5 - Sistema de Pedidos
+----------------------------------------------------
+Total consultado:  15
+Processados:       15
+   Inseridos:      15
+   Atualizados:    0
+   Sem alteração:  0
+Rejeitados:        0
+Inativados:        0  (removidos da origem)
+----------------------------------------------------
+ERROS E OCORRÊNCIAS
+----------------------------------------------------
+Nenhum erro encontrado.
+----------------------------------------------------
+STATUS: CONCLUÍDA
+====================================================

@@ -1,0 +1,4 @@
+DROP DATABASE IF EXISTS grupo5_db WITH (FORCE);
+DROP ROLE IF EXISTS grupo5_app;
+DROP ROLE IF EXISTS grupo7_integracao;
+DROP ROLE IF EXISTS grupo5_owner;

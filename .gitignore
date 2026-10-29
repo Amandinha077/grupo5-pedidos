@@ -1,0 +1,9 @@
+config.ini
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+config/acesso_remoto_postgresql.txt

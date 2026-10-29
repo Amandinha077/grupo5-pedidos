@@ -1,0 +1,89 @@
+digraph DER {
+  graph [rankdir=LR, fontname="Helvetica", nodesep=0.5, ranksep=0.9, bgcolor="white", label="DER - grupo5_db (Sistema de Pedidos)", labelloc=t, fontsize=18];
+  node  [shape=plaintext, fontname="Helvetica", fontsize=10];
+  edge  [fontname="Helvetica", fontsize=9, color="#555555", arrowhead=crow, arrowtail=tee, dir=both];
+
+  categoria [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+   <TR><TD BGCOLOR="#2E5AAC"><FONT COLOR="white"><B>pedidos.categoria</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT">PK categoria_id SERIAL</TD></TR>
+   <TR><TD ALIGN="LEFT">UK nome VARCHAR(100)</TD></TR>
+   <TR><TD ALIGN="LEFT">data_inclusao / data_atualizacao</TD></TR></TABLE>>];
+
+  produto [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+   <TR><TD BGCOLOR="#2E5AAC"><FONT COLOR="white"><B>pedidos.produto</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT">PK produto_id SERIAL</TD></TR>
+   <TR><TD ALIGN="LEFT">UK id_produto_origem INTEGER</TD></TR>
+   <TR><TD ALIGN="LEFT">nome VARCHAR(120)</TD></TR>
+   <TR><TD ALIGN="LEFT">descricao VARCHAR(500)</TD></TR>
+   <TR><TD ALIGN="LEFT">FK categoria_id</TD></TR>
+   <TR><TD ALIGN="LEFT">preco NUMERIC(12,2)</TD></TR>
+   <TR><TD ALIGN="LEFT">unidade VARCHAR(20)</TD></TR>
+   <TR><TD ALIGN="LEFT">disponivel BOOLEAN</TD></TR>
+   <TR><TD ALIGN="LEFT">data_atualizacao_origem</TD></TR>
+   <TR><TD ALIGN="LEFT">data_ultima_integracao</TD></TR></TABLE>>];
+
+  cliente [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+   <TR><TD BGCOLOR="#1F7A4D"><FONT COLOR="white"><B>pedidos.cliente</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT">PK cliente_id SERIAL</TD></TR>
+   <TR><TD ALIGN="LEFT">nome VARCHAR(120)</TD></TR>
+   <TR><TD ALIGN="LEFT">UK cpf VARCHAR(11)</TD></TR>
+   <TR><TD ALIGN="LEFT">email VARCHAR(120)</TD></TR>
+   <TR><TD ALIGN="LEFT">telefone VARCHAR(20)</TD></TR></TABLE>>];
+
+  endereco [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+   <TR><TD BGCOLOR="#1F7A4D"><FONT COLOR="white"><B>pedidos.endereco</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT">PK endereco_id SERIAL</TD></TR>
+   <TR><TD ALIGN="LEFT">FK cliente_id</TD></TR>
+   <TR><TD ALIGN="LEFT">logradouro, numero, complemento</TD></TR>
+   <TR><TD ALIGN="LEFT">bairro, cidade, uf, cep</TD></TR></TABLE>>];
+
+  pedido [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+   <TR><TD BGCOLOR="#1F7A4D"><FONT COLOR="white"><B>pedidos.pedido</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT">PK pedido_id SERIAL</TD></TR>
+   <TR><TD ALIGN="LEFT">FK cliente_id</TD></TR>
+   <TR><TD ALIGN="LEFT">FK endereco_id</TD></TR>
+   <TR><TD ALIGN="LEFT">data_pedido TIMESTAMP</TD></TR>
+   <TR><TD ALIGN="LEFT">status VARCHAR(15)</TD></TR>
+   <TR><TD ALIGN="LEFT">valor_total NUMERIC(12,2)</TD></TR>
+   <TR><TD ALIGN="LEFT">observacao VARCHAR(255)</TD></TR></TABLE>>];
+
+  item [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+   <TR><TD BGCOLOR="#1F7A4D"><FONT COLOR="white"><B>pedidos.item_pedido</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT">PK item_id SERIAL</TD></TR>
+   <TR><TD ALIGN="LEFT">FK pedido_id</TD></TR>
+   <TR><TD ALIGN="LEFT">FK produto_id</TD></TR>
+   <TR><TD ALIGN="LEFT">quantidade NUMERIC(10,3)</TD></TR>
+   <TR><TD ALIGN="LEFT">preco_unitario NUMERIC(12,2)</TD></TR>
+   <TR><TD ALIGN="LEFT">subtotal (calculado)</TD></TR></TABLE>>];
+
+  integracao [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+   <TR><TD BGCOLOR="#8A4B08"><FONT COLOR="white"><B>controle.integracao</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT">PK integracao_id SERIAL</TD></TR>
+   <TR><TD ALIGN="LEFT">data_inicio, data_fim</TD></TR>
+   <TR><TD ALIGN="LEFT">sistema_origem, sistema_destino</TD></TR>
+   <TR><TD ALIGN="LEFT">total_registros, processados</TD></TR>
+   <TR><TD ALIGN="LEFT">inseridos, atualizados, rejeitados</TD></TR>
+   <TR><TD ALIGN="LEFT">status, mensagem</TD></TR></TABLE>>];
+
+  erro [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+   <TR><TD BGCOLOR="#8A4B08"><FONT COLOR="white"><B>controle.erro_integracao</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT">PK erro_id SERIAL</TD></TR>
+   <TR><TD ALIGN="LEFT">FK integracao_id</TD></TR>
+   <TR><TD ALIGN="LEFT">registro_origem, campo</TD></TR>
+   <TR><TD ALIGN="LEFT">tipo_erro, descricao, gravidade</TD></TR>
+   <TR><TD ALIGN="LEFT">resolvido, data_resolucao</TD></TR></TABLE>>];
+
+  views [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+   <TR><TD BGCOLOR="#6B2E8F"><FONT COLOR="white"><B>api_entregas (views p/ Grupo 7)</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT">vw_integracao_pedidos</TD></TR>
+   <TR><TD ALIGN="LEFT">vw_integracao_itens_pedido</TD></TR></TABLE>>];
+
+  categoria -> produto [label="1:N"];
+  produto   -> item    [label="1:N"];
+  cliente   -> endereco[label="1:N"];
+  cliente   -> pedido  [label="1:N"];
+  endereco  -> pedido  [label="1:N"];
+  pedido    -> item    [label="1:N"];
+  integracao-> erro    [label="1:N"];
+  pedido    -> views   [style=dashed, arrowhead=normal, arrowtail=none, label="publica"];
+}

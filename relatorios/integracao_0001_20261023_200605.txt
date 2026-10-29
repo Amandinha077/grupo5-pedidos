@@ -1,0 +1,24 @@
+====================================================
+PROCESSAMENTO DA INTEGRAÇÃO
+====================================================
+Integração nº:     1
+Data/hora:         23/10/2026 20:06:05
+Origem:            Grupo 3 - Sistema de Produtos
+Estrutura:         (schema automático).vw_integracao_produtos
+Destino:           Grupo 5 - Sistema de Pedidos
+----------------------------------------------------
+Total consultado:  0
+Processados:       0
+   Inseridos:      0
+   Atualizados:    0
+   Sem alteração:  0
+Rejeitados:        0
+Inativados:        0  (removidos da origem)
+----------------------------------------------------
+ERROS E OCORRÊNCIAS
+----------------------------------------------------
+Integração - FATAL BANCO_INDISPONIVEL:
+   O banco do Grupo 3 (172.16.101.119) está fora do ar ou inacessível pela rede (3 tentativas sem resposta). Nenhum dado foi alterado no banco do Grupo 5; o Sistema de Pedidos continua funcionando com os últimos produtos integrados.
+----------------------------------------------------
+STATUS: FALHA - INTEGRAÇÃO INTERROMPIDA
+====================================================
